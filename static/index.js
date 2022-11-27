@@ -21,7 +21,7 @@ let keyword = ""
 // 搜尋keyword結果的時候要清理原本的
 content = document.querySelector(".content-1");
 button_search = document.querySelector(".button_search")
-input = document.querySelector(".input")
+
 
 
 // 點擊
@@ -42,7 +42,37 @@ button_search.addEventListener('click',() =>{
     
 });
 
+/*====================*/
 
+// 點擊input 搜尋欄顯示
+
+input = document.querySelector(".input")
+
+
+input.addEventListener("click",function (Event)  {
+    document.querySelector(".locate_card").style.display = "block";
+    console.log("召喚!!");
+    Event.stopPropagation(input)
+    
+  
+    }   ,false
+
+);
+
+
+body = document.querySelector(".body")
+// 點擊其他區域隱藏
+body.addEventListener("click",() =>{
+    document.querySelector(".locate_card").style.display = "none";
+    console.log("點擊其他區域隱藏")  
+
+    },false
+);
+
+
+
+
+/*====================*/
 
 
 // 重寫測試全域區
