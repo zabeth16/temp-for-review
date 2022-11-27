@@ -42,165 +42,64 @@
                 
                 
                 <div class = "search_bar">
-                    <input class = "input" type = "text" placeholder="輸入景點名稱查詢" name = "search"  required />
-                    <button class = "button_search"  >
+                    <input id = "input" class = "input" type = "search" placeholder="輸入景點名稱查詢" name = "search"  onclick ="show_tag();" required />
+                    
+                    <button class = "button_search" onclick = "keyword_view();" >
                         <img src="/mysource/icon-search.png"/>
                     </button>
                 </div>
+                <div class = "locate_card">
+                    <!-- <div class = "search_card" >
+                        <button class = "search_text">測試四字</button>
+                        <button class = "search_text">測試四字</button>
+                    </div> -->
+            
+                </div>
+
+
+
+
 
             </div>
+
+
         
     </div>
 
+
+
     <div class = "main">
-        <div class = "content"> <!-- for middle in 1200-->
+
              <!-- ATTN the radius every contents have -->
-            <div class = "square-1">
-                <img id = "img-control" alt=""></img>
-                <!-- img will be here -->
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-            
-            <div class = "square-2">
+        <div class = "content-1">
+            <!-- <div class = "square">
                 <img id = "img-control" alt=""></img>
                 <div class = "title"></div>
                 <div class = "detail">
                     <div class = "mrt"></div>
                     <div class = "tag"></div>
                 </div>
-            </div>
-
-            <div class = "square-3" >
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-4">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-5">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-6">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-7">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-8">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-9">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-10">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-11">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-            
-            <div class = "square-12">
-                <img id = "img-control" alt=""></img>
-                <div class = "title"></div>
-                <div class = "detail">
-                    <div class = "mrt"></div>
-                    <div class = "tag"></div>
-                </div>
-            </div>
-
-
-
-
-
+            </div> -->
 
         </div>
 
     </div>
 
     <!-- main js -->
-    <script type="text/javascript" src="mysource/index.js"></script>
+    
     
 
 
-
-
-
-
-
     <div class = "footer">
-        <!--看是要用圖片還是用打字的-->
+        <img class = "footer-pic" src="mysource/footer.jpg"/>
+
     </div>
 
 
 
 
-
-
 </body>
+
+<script type="text/javascript" src="mysource/index.js"></script>
 
 </html>
