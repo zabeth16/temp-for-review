@@ -7,6 +7,8 @@ let isLoading = false;
 /*====================*/
 let page_num = 0 
 
+let key_page_num = 0
+
 // keyword = document.getElementById("input").value
 
 let keyword = ""
@@ -19,56 +21,48 @@ let keyword = ""
 // 搜尋keyword結果的時候要清理原本的
 content = document.querySelector(".content-1");
 button_search = document.querySelector(".button_search")
+input = document.querySelector(".input")
+
 
 // 點擊
 
 button_search.addEventListener('click',() =>{
-    // page_num -1
+
     while (content.hasChildNodes()) {
-    content.removeChild(content.firstChild)
+
+        content.removeChild(content.firstChild)  
     
     };
+    key_page_num = 0
+    page_num = 0
+
+    keyword_view();
+
+
     
 });
+
 
 
 
 // 重寫測試全域區
 
 // 關鍵字 page 頁
-let keyword_view = (data) =>{
-    
-    
-    keyword = document.getElementById("input").value
-    console.log(keyword)
 
+function keyword_view(data){
     
     
     
-    // console.log(data.data)
+keyword = document.getElementById("input").value
+console.log(keyword)
 
-
-    // isLoading = true
-    
-    
-        let data_list = data.data
+console.log(data.data)
 
 
-        // 搜尋keyword結果的時候要清理原本的
-        // content = document.querySelector(".content-1");
-        // button_search = document.querySelector(".button_search")
-        
-        // 點擊       
-        
-        // button_search.addEventListener('click',() =>{
-            
-        // while (content.hasChildNodes()) {
-        //     content.removeChild(content.firstChild)               
-        //     };
-        //     page_num = 0
-            
-            
-        // });
+let data_list = data.data
+
+
+
         
 
         for (i = 0 ; i < data_list.length  ; i ++ ){
@@ -129,13 +123,17 @@ let keyword_view = (data) =>{
 
         }; //for end
         console.log(data.nextPage)
-        if (page_num <= data.nextPage ){ //&& isLoading === true
+        if (key_page_num <= data.nextPage ){ //&& isLoading === true
             console.log("繼續召喚")
        
-        }else{
+        }else{    
+            key_page_num = 0
+            page_num = 0
             console.log("取消觀察，以免又觸發下一個 request")
             observer.unobserve(listEnd);
-            observer.disconnect();
+            // observer.disconnect();
+ 
+
             
         }
 
@@ -144,8 +142,8 @@ let keyword_view = (data) =>{
 
     
     
-    page_num++
-    console.log("關鍵字下面一位! " , page_num)
+    // key_page_num++
+    // console.log("關鍵字下面一位! " , key_page_num)
 
 
 };
@@ -222,43 +220,35 @@ let append_view = (data) =>{
 
                
 
-        }; //for end
+        }; 
+
+
+
+        //for end
         console.log("實際nextPage" , data.nextPage)
         if (page_num <= data.nextPage  ){ // && isLoading === true
             console.log("繼續召喚")
             console.log(isLoading)
        
         }else{
-            
+            key_page_num = 0
+            page_num = 0   
+            console.log(isLoading)
             console.log("取消觀察，以免又觸發下一個 request")
             observer.unobserve(listEnd);
-            observer.disconnect();      
-            
-            console.log(isLoading)
-        }
-
-   
-
-    /* 關鍵字用的，也可能不用啦
-    if (keyword != ""){
-
-        if (page_num  <= 0 ){
-            console.log("找下頁關鍵字景點")
-            // page_num ++
-                
-            
-        }else{
-            console.log("沒有下一頁關鍵字景點了")
-            observer.unobserve(listEnd);
-            observer.disconnect();
-        }
-        
-    }
-    */
+            // observer.disconnect(); 
+  
 
             
-    page_num++
-    console.log("普通下面一位! " , page_num)
+        } 
+
+    // page_num++
+    // console.log("普通下面一位! " , page_num)
+
+
+
+            
+
     
     
 
@@ -272,19 +262,20 @@ let options = {
     threshold: 0
 };
 
+let count_call = 0
 
 const callback = (entries, observer) => {
-
+    
     
     entries.forEach(entry => {
         console.log("call第幾次" + page_num)
         // Do something...
         if (keyword === ""){
-            if (entry.isIntersecting && isLoading === false  ) { //&& keyword == undefined
-            console.log("Loaded new items")
+            if (entry.isIntersecting && isLoading === false && page_num !== null ) { //&& keyword == undefined
+                console.log("Loaded new items")
                 
                 isLoading = true
-         
+                
             
                 fetch(`/api/attractions?page=${page_num}`) 
                 .then(function (response){
@@ -296,38 +287,25 @@ const callback = (entries, observer) => {
                         console.log('普通頁載入中')
                         // console.log(data.data[0])
                         append_view(data);
-                        
-                       
+                        page_num ++  
+                                             
                     
 
                         isLoading = false; 
-                }) //.finally(function() { isLoading === false; 
-                    //                    console.log(isLoading)}   );
+                }) .finally(function() { 
+                        isLoading === false;}   );
 
-            } //else{
-                
-            //     fetch(`/api/attractions?page=${page_num}&keyword=${keyword}`) 
-            //     .then(function (response){
-            //         return response.json();
-            //     })
-            //     .then(res = (data) => {
-                    
-            //         // 關鍵字召喚
-            //         console.log('關鍵字頁載入中')
-            //         // console.log("關鍵字的" , data.data)
-                    
-            //         keyword_view(data);  
-            
-            //     })       
-        
-            // }           
+            }   
                 
                 
                 
                                      
-        } else {   
+        } else {  
+            if (entry.isIntersecting && isLoading === false  && page_num !== null) { //&& keyword == undefined
+           
             isLoading = true
-                fetch(`/api/attractions?page=${page_num}&keyword=${keyword}`) 
+
+                fetch(`/api/attractions?page=${key_page_num}&keyword=${keyword}`) 
                 .then(function (response){
                     return response.json();
                 })
@@ -338,11 +316,19 @@ const callback = (entries, observer) => {
                     // console.log("關鍵字的" , data.data)
                     
                     keyword_view(data);  
+                    key_page_num++
+               
+
+      
+
+
+                    isLoading = false; 
             
                 })       
         
                      
-        }   
+            }   
+        }
 
                 
     
