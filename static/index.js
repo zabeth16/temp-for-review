@@ -5,69 +5,96 @@ let isLoading = false;
 
 
 /*====================*/
-let page_num = 0 
+// let page_num = 0 
 
-let key_page_num = 0
-
-// keyword = document.getElementById("input").value
+// let key_page_num = 0
 
 let keyword = ""
+
+let nextPage = 0
 
 
 
 /*====================*/
 
 
-// 搜尋keyword結果的時候要清理原本的
-content = document.querySelector(".content-1");
-button_search = document.querySelector(".button_search")
-
-
-
-// 點擊
-
-button_search.addEventListener('click',() =>{
-
-    while (content.hasChildNodes()) {
-
-        content.removeChild(content.firstChild)  
-    
-    };
-    key_page_num = 0
-    page_num = 0
-
-    keyword_view();
-
-
-    
-});
 
 /*====================*/
 
 // 點擊input 搜尋欄顯示
 
 input = document.querySelector(".input")
+search_text = document.querySelector(".search_text")
 
 
 input.addEventListener("click",function (Event)  {
     document.querySelector(".locate_card").style.display = "block";
-    console.log("召喚!!");
-    Event.stopPropagation(input)
+    console.log("召喚!!覆蓋的搜尋卡!");
+    // console.log(search_text.textContent);
+    Event.stopPropagation(input)  
     
+    document.querySelector(".input").textContent = "9487"
+ 
   
-    }   ,false
+    },false
 
 );
+
+
+
 
 
 body = document.querySelector(".body")
 // 點擊其他區域隱藏
 body.addEventListener("click",() =>{
     document.querySelector(".locate_card").style.display = "none";
-    console.log("點擊其他區域隱藏")  
+    // console.log("點擊其他區域隱藏")  
 
     },false
 );
+
+// 點擊分類景點懶人傳去input欄位
+// 還沒查到QQ
+
+
+
+/*====================*/
+// keyword 搜尋結果專區
+
+content = document.querySelector(".content-1");
+button_search = document.querySelector(".button_search")
+
+
+async function keyword_load(){
+    keyword = document.querySelector(".input").value
+    console.log(keyword)
+    const response = await fetch(`/api/attractions?page=0&keyword=${keyword}`);
+    const data = await response.json();
+    // 產生 nextPage 數字
+    nextPage = data.nextPage ;
+    data_list = data.data;
+    keyword_view(data_list);
+
+}
+
+
+
+
+
+// 點擊 serach keyword page
+button_search.addEventListener('click',() =>{
+
+    // 搜尋keyword結果的時候要清理原本的
+    while (content.hasChildNodes()) {
+
+        content.removeChild(content.firstChild)  
+    
+    };
+
+    keyword_load();
+    nextPage = 0
+    
+});
 
 
 
@@ -79,21 +106,11 @@ body.addEventListener("click",() =>{
 
 // 關鍵字 page 頁
 
-function keyword_view(data){
+function keyword_view(data_list){
     
-    
-    
-keyword = document.getElementById("input").value
-console.log(keyword)
 
-console.log(data.data)
-
-
-let data_list = data.data
-
-
-
-        
+    isLoading = true ;
+     
 
         for (i = 0 ; i < data_list.length  ; i ++ ){
                 
@@ -152,23 +169,23 @@ let data_list = data.data
                
 
         }; //for end
-        console.log(data.nextPage)
-        if (key_page_num <= data.nextPage ){ //&& isLoading === true
-            console.log("繼續召喚")
+        
+        if ( nextPage !== null ){ 
+            console.log("繼續召喚");
+            isLoading = false ;
+            console.log("關鍵字載入", isLoading);
        
         }else{    
-            key_page_num = 0
-            page_num = 0
-            console.log("取消觀察，以免又觸發下一個 request")
+            
+            console.log("取消觀察，以免又觸發下一個 request");
+            console.log("關鍵字載入" , isLoading)
             observer.unobserve(listEnd);
-            // observer.disconnect();
+            observer.disconnect();
+            nextPage = 0
  
 
             
-        }
-
-
-
+        };
 
     
     
@@ -181,16 +198,16 @@ let data_list = data.data
 
 // 普通 page 頁
 
-let append_view = (data) =>{
-    
-    
-               
-    let data_list = data.data
-    
-    
-    // console.log(data_list)
-       
+let append_view = (data_list) =>{
 
+    
+    // isLoading = true
+                
+    // 你fetch，記得最上面(data)要拿掉
+    // fetch(`/api/attractions?page=${nextPage}`) 
+    // .then(function (response){
+    // return response.json();
+    // }).then(function (data){ })
 
          
 
@@ -255,25 +272,23 @@ let append_view = (data) =>{
 
 
         //for end
-        console.log("實際nextPage" , data.nextPage)
-        if (page_num <= data.nextPage  ){ // && isLoading === true
-            console.log("繼續召喚")
-            console.log(isLoading)
+        console.log("實際nextPage" , nextPage);
+        if (nextPage !== null ){ // && isLoading === true
+            console.log("繼續召喚");
+            isLoading = false ;
+            console.log(isLoading);
        
         }else{
-            key_page_num = 0
-            page_num = 0   
-            console.log(isLoading)
-            console.log("取消觀察，以免又觸發下一個 request")
+            
+            console.log(isLoading);
+            console.log("取消觀察，以免又觸發下一個 request");
             observer.unobserve(listEnd);
-            // observer.disconnect(); 
+            observer.disconnect(); 
+            nextPage = 0
   
 
             
-        } 
-
-    // page_num++
-    // console.log("普通下面一位! " , page_num)
+        } ;
 
 
 
@@ -286,97 +301,55 @@ let append_view = (data) =>{
 
 
 
+
+/*====================*/
+
+// 無限卷軸載入、叫產生資料函式
+// 配合早上說的async、await
+
+async function load_view(){
+    if (nextPage === null | isLoading === true){
+        return console.log("不要動!");
+    };
+
+    if (keyword !== ""){ 
+        url = `/api/attractions?page=${nextPage}&keyword=${keyword}`
+    }
+    else{
+        url = `/api/attractions?page=${nextPage}`
+    }
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    
+    // 產生 nextPage 數字
+    nextPage = data.nextPage;
+    data_list = data.data;
+
+    append_view(data_list);
+   
+
+}
+
+
+
+
 // the options for observer
 let options = {
-    
-    threshold: 0
+    root: null,
+    rootMargin: "10px  " ,
+    threshold: 0.2 
 };
 
-let count_call = 0
-
-const callback = (entries, observer) => {
-    
-    
-    entries.forEach(entry => {
-        console.log("call第幾次" + page_num)
-        // Do something...
-        if (keyword === ""){
-            if (entry.isIntersecting && isLoading === false && page_num !== null ) { //&& keyword == undefined
-                console.log("Loaded new items")
-                
-                isLoading = true
-                
-            
-                fetch(`/api/attractions?page=${page_num}`) 
-                .then(function (response){
-                return response.json();
-                })
-                .then(res = (data)  => {
-                        
-                        // 普通召喚
-                        console.log('普通頁載入中')
-                        // console.log(data.data[0])
-                        append_view(data);
-                        page_num ++  
-                                             
-                    
-
-                        isLoading = false; 
-                }) .finally(function() { 
-                        isLoading === false;}   );
-
-            }   
-                
-                
-                
-                                     
-        } else {  
-            if (entry.isIntersecting && isLoading === false  && page_num !== null) { //&& keyword == undefined
-           
-            isLoading = true
-
-                fetch(`/api/attractions?page=${key_page_num}&keyword=${keyword}`) 
-                .then(function (response){
-                    return response.json();
-                })
-                .then(res = (data) => {
-                    
-                    // 關鍵字召喚
-                    console.log('關鍵字頁載入中')
-                    // console.log("關鍵字的" , data.data)
-                    
-                    keyword_view(data);  
-                    key_page_num++
-               
-
-      
+const observer = new IntersectionObserver(load_view, options);
+console.log(new IntersectionObserver(load_view));
 
 
-                    isLoading = false; 
-            
-                })       
-        
-                     
-            }   
-        }
+const listEnd = document.querySelector(".footer");
 
-                
-    
+observer.observe(listEnd);
 
 
-    
-    })
-
-    
-    
-};
-
-let observer = new IntersectionObserver(callback, options);
-console.log(new IntersectionObserver(callback))
-
-let listEnd = document.querySelector(".footer");
-
-observer.observe(listEnd)
 
 
 
@@ -441,10 +414,10 @@ show_tag();
 //     }
 // });
 
-// window.onclick = show_tag();
 
 
-// document.getElementsByClassName(".search_card").style.display="none"; //隐藏
-// document.getElementsByClassName(".search_card").style.display=""; //显示
+
+// document.getElementsByClassName(".search_card").style.display="none"; //隱藏
+// document.getElementsByClassName(".search_card").style.display=""; //顯示
 
 //============================================================
