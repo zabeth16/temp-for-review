@@ -201,7 +201,7 @@ function keyword_view(data_list){
 let append_view = (data_list) =>{
 
     
-    // isLoading = true
+    isLoading = true
                 
     // 你fetch，記得最上面(data)要拿掉
     // fetch(`/api/attractions?page=${nextPage}`) 
