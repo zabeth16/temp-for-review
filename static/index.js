@@ -11,11 +11,23 @@ let isLoading = false;
 
 let keyword = ""
 
-let nextPage = 0
+let nextPage
 
 
 
 /*====================*/
+
+async function initialLoad() {
+    const response = await fetch("/api/attractions?page=0");
+    const parsedData = await response.json();
+    nextPage = parsedData.nextPage;
+    data = parsedData.data;
+    append_view(data);
+    // console.log(parsedData.nextPage)
+}
+  
+document.addEventListener("DOMContentLoaded", initialLoad);
+
 
 
 
@@ -68,12 +80,14 @@ button_search = document.querySelector(".button_search")
 async function keyword_load(){
     keyword = document.querySelector(".input").value
     console.log(keyword)
+    isLoading = true ;
     const response = await fetch(`/api/attractions?page=0&keyword=${keyword}`);
     const data = await response.json();
     // 產生 nextPage 數字
     nextPage = data.nextPage ;
     data_list = data.data;
-    keyword_view(data_list);
+    append_view(data_list.length);
+    
 
 }
 
@@ -92,7 +106,7 @@ button_search.addEventListener('click',() =>{
     };
 
     keyword_load();
-    nextPage = 0
+    // nextPage = 0
     
 });
 
@@ -104,96 +118,6 @@ button_search.addEventListener('click',() =>{
 
 // 重寫測試全域區
 
-// 關鍵字 page 頁
-
-function keyword_view(data_list){
-    
-
-    isLoading = true ;
-     
-
-        for (i = 0 ; i < data_list.length  ; i ++ ){
-                
-
-
-            // create container square
-
-                let square = document.createElement("div");
-                square.className = "square";
-                let content = document.querySelector(".content-1");
-                content.appendChild(square);
-
-
-                // attraction images
-
-                first_pic = data_list[i].images[0];              
-                let pic_box = document.createElement("img");
-                pic_box.id = "img-control";
-                pic_box.src = first_pic;
-                square.appendChild(pic_box);
-        
-
-
-
-                // attraction name (title)
-
-                let title_text = document.createTextNode(data_list[i].name);
-                
-                let title = document.createElement("div");
-                title.className = "title";
-                title.appendChild(title_text);
-                square.appendChild(title)
-
-                
-                // attraction mrt
-                let mrt = document.createTextNode(data_list[i].mrt);
-                let mrt_box = document.createElement("div");
-                mrt_box.className = "mrt" ;               
-                mrt_box.appendChild(mrt);
-                
-
-
-                // attraction category (tag)
-                let category = document.createTextNode(data_list[i].category);
-                let cat_box = document.createElement("div");
-                cat_box.className = "tag";
-                cat_box.appendChild(category);
-
-                // container detail
-                let detail = document.createElement("div");
-                detail.className = "detail";
-                detail.appendChild(mrt_box);
-                detail.appendChild(cat_box)
-                square.appendChild(detail)
-
-               
-
-        }; //for end
-        
-        if ( nextPage !== null ){ 
-            console.log("繼續召喚");
-            isLoading = false ;
-            console.log("關鍵字載入", isLoading);
-       
-        }else{    
-            
-            console.log("取消觀察，以免又觸發下一個 request");
-            console.log("關鍵字載入" , isLoading)
-            observer.unobserve(listEnd);
-            observer.disconnect();
-            nextPage = 0
- 
-
-            
-        };
-
-    
-    
-    // key_page_num++
-    // console.log("關鍵字下面一位! " , key_page_num)
-
-
-};
 
 
 // 普通 page 頁
@@ -201,13 +125,9 @@ function keyword_view(data_list){
 let append_view = (data_list) =>{
 
     
-    isLoading = true
+    //isLoading = true;
                 
-    // 你fetch，記得最上面(data)要拿掉
-    // fetch(`/api/attractions?page=${nextPage}`) 
-    // .then(function (response){
-    // return response.json();
-    // }).then(function (data){ })
+
 
          
 
@@ -279,12 +199,12 @@ let append_view = (data_list) =>{
             console.log(isLoading);
        
         }else{
-            
+            isLoading = false ;
             console.log(isLoading);
             console.log("取消觀察，以免又觸發下一個 request");
-            observer.unobserve(listEnd);
-            observer.disconnect(); 
-            nextPage = 0
+            // observer.unobserve(listEnd);
+            // observer.disconnect(); 
+            // nextPage = 0
   
 
             
@@ -307,18 +227,26 @@ let append_view = (data_list) =>{
 // 無限卷軸載入、叫產生資料函式
 // 配合早上說的async、await
 
-async function load_view(){
-    if (nextPage === null | isLoading === true){
+
+
+async function load_view(entry){
+    console.log(entry)
+    
+    
+    if (nextPage === null || isLoading === true){
         return console.log("不要動!");
-    };
+    }
 
     if (keyword !== ""){ 
+        
         url = `/api/attractions?page=${nextPage}&keyword=${keyword}`
     }
     else{
+        
         url = `/api/attractions?page=${nextPage}`
     }
-    const response = await fetch(url);
+    isLoading = true ;
+    const response = await fetch(url);    
     const data = await response.json();
     
     
@@ -332,17 +260,18 @@ async function load_view(){
 }
 
 
-
+console.log(window.innerHeight)
+view_h = window.innerHeight
 
 // the options for observer
 let options = {
     root: null,
-    rootMargin: "10px  " ,
-    threshold: 0.2 
+    rootMargin: `-${view_h - 72}px 0px 0px 0px`  ,
+    threshold: 0.5 
 };
 
 const observer = new IntersectionObserver(load_view, options);
-console.log(new IntersectionObserver(load_view));
+console.log(new IntersectionObserver(load_view , options ));
 
 
 const listEnd = document.querySelector(".footer");
