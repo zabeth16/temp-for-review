@@ -13,7 +13,7 @@
     @import url(https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap);
 </style>
 
-<body>
+<body class = "body">
     <div class ="nav">
         <div class = "nav_bar">
             <txt class = "nav_title">
@@ -42,20 +42,21 @@
                 
                 
                 <div class = "search_bar">
-                    <input id = "input" class = "input" type = "search" placeholder="輸入景點名稱查詢" name = "search"  onclick ="show_tag();" required />
+                    <input id = "input" class = "input" type = "search" placeholder="輸入景點名稱查詢" name = "search"  required /> <!--onclick ="show_tag();"-->
                     
-                    <button class = "button_search" onclick = "keyword_view();" >
+                    <button class = "button_search"  type="submit"> <!--onclick = "keyword_view();"-->
                         <img src="/mysource/icon-search.png"/>
                     </button>
+                    <div class = "locate_card">
+                        <!-- <div class = "search_card" >
+                            <button class = "search_text">測試四字</button> 改div試試
+                            <button class = "search_text">測試四字</button>
+                        </div> -->
+                
+                    </div>
+    
                 </div>
-                <div class = "locate_card">
-                    <!-- <div class = "search_card" >
-                        <button class = "search_text">測試四字</button>
-                        <button class = "search_text">測試四字</button>
-                    </div> -->
-            
-                </div>
-
+                
 
 
 
@@ -91,7 +92,7 @@
 
 
     <div class = "footer">
-        <img class = "footer-pic" src="mysource/footer.jpg"/>
+        <!-- <img class = "footer-pic" src="mysource/footer.jpg"/> -->
 
     </div>
 
