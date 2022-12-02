@@ -84,23 +84,22 @@ function append_view(data){
     // the circle and its' box 
     let circle_box = document.querySelector(".circle-box")
 
-    let small_black = document.createElement("div")
-    small_black.className = "small-black"
-    let big_white = document.createElement("div")
-    big_white.className = "big-white" 
-    big_white.appendChild(small_black)
-    big_white.setAttribute("onclick" , "current")
+    // let small_black = document.createElement("div")
+    // small_black.className = "small-black"
+    // let big_white = document.createElement("div")
+    // big_white.className = "big-white" 
+    // big_white.appendChild(small_black)
+    // big_white.setAttribute("onclick" , "current")
 
 
-    circle_box.appendChild(big_white)
+    // circle_box.appendChild(big_white)
 
     // the other white circle
-    for (c = i+1 ; c < data[0].images.length  ; c++ ){
+    for (c = i ; c < data[0].images.length  ; c++ ){
         let big_white = document.createElement("div")
         big_white.className = "big-white" 
 
         circle_box.appendChild(big_white)
-
     }
 
     
@@ -143,15 +142,19 @@ function append_view(data){
                 let small_black = document.createElement("div")
                 small_black.className = "small-black"
                 // big_white[i].appendChild(small_black)
-                let dots = document.querySelectorAll(".big-white")
+                // let dots = document.querySelectorAll(".big-white")
                 
                 // for (i = 0; i < data[0].images.length ; i++) {
                 //     console.log(i)
-                //     // dots[i].className = dots[i].className.replace(" active", "");
+                //     dots[i].className = dots[i].className.replace(" active", "");
                 // }
                 // dots.className += " active";
 
-                dots[nextImg].appendChild(small_black)
+                // dots[nextImg].appendChild(small_black)
+
+                // 這只能append 第0個而已
+                big_white.appendChild(small_black)
+                
 
                 pic_box.appendChild(circle_box)
                 pic_box.appendChild(right_A)
