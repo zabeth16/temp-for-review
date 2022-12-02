@@ -36,22 +36,101 @@ document.addEventListener("DOMContentLoaded", initialLoad);
 // 點擊input 搜尋欄顯示
 
 input = document.querySelector(".input")
-search_text = document.querySelector(".search_text")
+
+
 
 
 input.addEventListener("click",function (Event)  {
     document.querySelector(".locate_card").style.display = "block";
     console.log("召喚!!覆蓋的搜尋卡!");
-    // console.log(search_text.textContent);
+    
     Event.stopPropagation(input)  
     
-    document.querySelector(".input").textContent = "9487"
+    
+    //console.log(document.querySelector(".search_text").textContent)
+
+   
  
   
     },false
 
 );
 
+// 點擊分類景點懶人傳去input欄位
+// 還沒查到QQ
+// EventTarget.value 丟到input裡面! select 標籤的textContent
+
+// document.getElementsByClassName(".search_text").value = input.innerHTML;
+search_text = document.querySelector(".search_text")
+search_card = document.querySelector(".search_card")
+
+// ======= add 監聽事件 大失敗=========
+// search_card.addEventListener("click" ,function(event){
+
+//     console.log("點擊事件有點到嗎?")
+//     event.stopPropagation(search_card)  
+//     } , false
+// )
+
+// 我上面console的到，但是我點擊各種事件就是拿不到QQ
+
+// ======= onclick 加函式 =========
+// document.getElementsByClassName(".locate_card").onclick = function get_btn(){
+    
+    // let text = document.querySelector(".search_text").textContent
+    // console.log("有沒有點到?")
+    // let btn_text = document.createTextNode(text)
+    
+
+    // input.appendChild(btn_text)
+    // text = input.innerHTML
+
+    // document.getElementsByClassName(".input").innerHTML = ""
+//     document.getElementsByClassName(".input").innerHTML = document.querySelector(".search_text").textContent
+
+// }
+
+
+
+search_card = document.querySelector(".search_card")
+search_text = document.querySelector(".search_text")
+lo_card = document.querySelector(".locate_card")
+
+lo_card.addEventListener("click",get_btn = (e)=>{ //其實也沒用到什麼get_btn函式
+    // 先解決冒泡，不會點了消失
+    e.stopPropagation(lo_card)
+    
+    document.querySelector(".locate_card").style.display = "block"
+
+    console.log(e.target.textContent) // 可以找到我點誰的文字!!!
+    // console.log(e.target.textContent.length)
+  
+
+    input = document.querySelector(".input")
+    if (e.target.textContent.length > 4){
+        input.textContent = ""
+    }else{
+        input.value = e.target.textContent
+        document.querySelector(".locate_card").style.display = "none"
+
+    }
+    
+
+    
+    // 純粹看怎麼抓我的文字
+    // text_list = document.querySelectorAll(".search_text")
+    
+    // // console.log(text_list[8].textContent)
+    // for (i = 0 ; i < text_list.length ; i++ ){
+    //     text =  text_list[i].textContent
+    //     // console.log(text)
+        
+    // }   
+
+
+
+    },false
+)
 
 
 
@@ -60,13 +139,10 @@ body = document.querySelector(".body")
 // 點擊其他區域隱藏
 body.addEventListener("click",() =>{
     document.querySelector(".locate_card").style.display = "none";
-    // console.log("點擊其他區域隱藏")  
-
+    // console.log("點擊其他區域隱藏")
     },false
 );
 
-// 點擊分類景點懶人傳去input欄位
-// 還沒查到QQ
 
 
 
@@ -80,13 +156,28 @@ button_search = document.querySelector(".button_search")
 async function keyword_load(){
     keyword = document.querySelector(".input").value
     console.log(keyword)
+    
+
     isLoading = true ;
     const response = await fetch(`/api/attractions?page=0&keyword=${keyword}`);
     const data = await response.json();
     // 產生 nextPage 數字
     nextPage = data.nextPage ;
     data_list = data.data;
-    append_view(data_list.length);
+    append_view(data_list);
+
+    
+    if (data_list.length === 0){
+        console.log("沒有這個景點")
+        main = document.querySelector(".content-1")
+        warn = document.createTextNode("沒有這個景點")
+        warn_box = document.createElement("div")
+        warn_box.className = "warn_box"
+       
+
+        warn_box.appendChild(warn)
+        main.appendChild(warn_box)
+    }
     
 
 }
@@ -105,10 +196,26 @@ button_search.addEventListener('click',() =>{
     
     };
 
+
     keyword_load();
     // nextPage = 0
     
 });
+
+/*====================*/
+/*  點擊傳送至attraction頁面  */
+
+let square = document.querySelector(".square")
+
+content.addEventListener("click" , (e) =>{
+    
+    e.stopPropagation(square)
+    // console.log(e.target)
+    // 恩......都抓到子元素
+
+    
+    },
+);
 
 
 
@@ -124,11 +231,10 @@ button_search.addEventListener('click',() =>{
 
 let append_view = (data_list) =>{
 
+    // console.log(data_list)
     
     //isLoading = true;
-                
-
-
+    
          
 
         for (i = 0 ; i < data_list.length  ; i ++ ){
@@ -185,6 +291,19 @@ let append_view = (data_list) =>{
                 detail.appendChild(cat_box)
                 square.appendChild(detail)
 
+                let a = document.createElement("a")
+                a.href = "/attraction/" + (i+1)
+                // console.log(a)
+                
+                // let frame = document.createElement("frame")
+                // frame.name = "view_frame"
+                // square.appendChild(frame)
+                // a.target = "view_frame"
+                content.appendChild(a)
+                a.appendChild(square)
+
+
+
                
 
         }; 
@@ -202,6 +321,8 @@ let append_view = (data_list) =>{
             isLoading = false ;
             console.log(isLoading);
             console.log("取消觀察，以免又觸發下一個 request");
+
+            
             // observer.unobserve(listEnd);
             // observer.disconnect(); 
             // nextPage = 0
@@ -228,36 +349,43 @@ let append_view = (data_list) =>{
 // 配合早上說的async、await
 
 
+async function load_view(entries){
 
-async function load_view(entry){
-    console.log(entry)
-    
-    
-    if (nextPage === null || isLoading === true){
-        return console.log("不要動!");
-    }
 
-    if (keyword !== ""){ 
+    entries.forEach((entry) => {
+        if(entry.isIntersecting){
+            if (nextPage === null || isLoading === true){
+                return console.log("不要動!");
+            }
         
-        url = `/api/attractions?page=${nextPage}&keyword=${keyword}`
-    }
-    else{
+            if (keyword !== ""){ 
+                
+                url = `/api/attractions?page=${nextPage}&keyword=${keyword}`
+            }
+            else{
+                
+                url = `/api/attractions?page=${nextPage}`
+            }
+            isLoading = true ;
+            fetch(url).then(function (response){
+                return response.json();
+                }).then(res = (data)  => {
+                    // 產生 nextPage 數字
+                    nextPage = data.nextPage;
+                    
+                    append_view(data.data);
+                }) 
+            
+            
+
         
-        url = `/api/attractions?page=${nextPage}`
-    }
-    isLoading = true ;
-    const response = await fetch(url);    
-    const data = await response.json();
+ 
+           
+        };
+    });
     
+};
     
-    // 產生 nextPage 數字
-    nextPage = data.nextPage;
-    data_list = data.data;
-
-    append_view(data_list);
-   
-
-}
 
 
 console.log(window.innerHeight)
@@ -266,7 +394,7 @@ view_h = window.innerHeight
 // the options for observer
 let options = {
     root: null,
-    rootMargin: `-${view_h - 72}px 0px 0px 0px`  ,
+    rootMargin: `-${view_h - 90}px 0px 0px 0px`  ,
     threshold: 0.5 
 };
 
@@ -315,13 +443,17 @@ function show_tag(){
 
         locate.appendChild(search_card)
         for (s = 0 ; s <data.data.length ; s++ ){
-            let search_text = document.createElement("button");
+            let search_text = document.createElement("div");
             search_text.className = "search_text";
             let text = document.createTextNode(data.data[s]);
             search_text.appendChild(text);
             search_card.appendChild(search_text);
             
+         
+            
         };
+     
+
 
 
                 
