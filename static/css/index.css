@@ -79,7 +79,7 @@ body{
     width: 100%;
     margin-top: 54px;
     height: 320px;
-    background-image:  url("welcomeTP101.jpg");
+    background-image:  url("/mysource/css/welcomeTP101.jpg");
     background-repeat: no-repeat;
     background-position:top center;
     background-size: cover;
@@ -128,7 +128,85 @@ body{
 .search_bar{
     margin-top: 25px;
     display: flex;
+    flex-wrap: wrap;
     height: 46px;
+    width: 700px;
+}
+
+.locate_card{
+    display: flex;
+    flex-wrap: wrap;
+    display: none;
+    
+}
+
+
+.search_card{
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px #AABBCC;
+    width: 400px;
+    height:auto;
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 5px;
+    /* display: none; */
+
+}
+
+.search_text{
+    color:#000000;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 15px;
+    cursor:pointer;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+}
+
+.search_text:hover{
+    background-color: #E8E8E8;
+    cursor: pointer;
+}
+
+.square:hover{
+    background-color: #E8E8E8;
+    cursor: pointer;
+    -webkit-filter: grayscale(50%);
+    filter: grayscale(50%);
+    /* animation: shake 0.5s; */
+}
+
+
+/* 抖動超好笑，後來拿掉了，太鬧 */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+#img-control:hover{
+    -webkit-filter: grayscale(80%);
+    filter: grayscale(80%);
+    /* animation: shake 0.5s; */
+    /* animation-iteration-count: infinite; */
+
+    -webkit-filter: blur(1px); /* Safari 6.0 - 9.0 */
+    filter: blur(1px);
 }
 
 .input{
@@ -163,13 +241,16 @@ body{
 
 }
 
+
+
+
 .main{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.content{
+/* .content{
     margin-top: 54px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -179,25 +260,34 @@ body{
     width: 1200px;
     height:816px;
     background-color: #ffffff;
+} */
+
+/**/
+.content-1{
+    margin-top: 54px;
+    display:flex;
+    width: 1200px;
+    height: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between ;
+    /* margin: 30px; */
 }
 
-.square-1{
-
-    grid-column-start: 1;
-    grid-column-start:1;
+.square{
     display: inline-grid;
-    background-color: rgb(255, 255, 255);    
     height: 242px;
     width: 270px;
     border-style:solid;
     border-color: #c4c4c4;
     border-width: 1.5px;
     border-radius: 5px ;
+    margin-bottom: 30px ;
     
-
-
-
+    
 }
+
+
 
 .title{
     
@@ -212,7 +302,7 @@ body{
     /* opacity: 0.6; */
     line-height: 40px;
     padding-left: 10px;
-    
+    overflow: hidden;
         
     position: relative; 
     height:40px;   
@@ -232,17 +322,25 @@ body{
 
 }
 
+.attractionLink{  
+    /* 用a 包住square 就好了啊!!!! */
+    height: 242px;
+    width: 270px; 
+    /* z-index: 1; */
+    margin-bottom: 30px;
+    text-decoration: none;
+} 
 
-.square-1 > img,
+.square > img ,
 
-.square-1 > .title {
+.square > .title {
     /* 還可以簡寫為 grid-area: 1 / 2 */
     grid-area: 1/ 1 / 2;
-    align-self: end;
+    align-self: end;   
 
-    
+} 
 
-}  
+
 
 .detail{
     display: flex;
@@ -279,437 +377,249 @@ body{
 
 }
 
-.square-2{
+
+/* .footer-pic{
+    width: 100%;
+} */
+
+.footer{
+    height: 10vh;
+    background-image: url("/mysource/css/footer.jpg");
+    background-position:top center;
+    background-size: cover;
+
+}
+
+.warn_box{
     
-
-    grid-column-start: 2;
-    grid-row-start:1;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-    
-
-
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    color: #2d3d45;   
+    font-size: 50px; 
+    width: 1200px;
+    padding-bottom: 54px;
     
 }
 
 
-.square-2 > img,
+.dialog-background{
+    background-color: rgb(0, 0, 0 , 0.25);    
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: fixed;    
+    display: flex;
+    justify-content: center;
+}
 
-.square-2 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
 
+.dialog-signup{
+    background-color: #FFFFFF;   
+    width: 340px;
+    height: 380px;
+    border-radius: 6px;
+    margin-top: 80px;
+    overflow: hidden;
+    box-shadow: 0px 4px 60px #AAAAAA;
+    flex-wrap: wrap;
+}
+
+
+.high {
+    height: 400px;
+}
+
+.high-main {
+    height: 350px !important ;
+}
+
+.notice{
+    margin-top: 10px;
+    color: #9d312d;
+    width: 100%;
+    justify-content:center ;
+    display: flex;
+}
+
+.notice-login{
+    margin-top: 10px;
+    color: #9d312d;
+}
+
+.decorator-bar{
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+    height: 10px;    
+    width: 100%;
+}
+
+.dialog-main{
+    margin: 15px;
+    height: 292px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+.dialog-title{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    text-align: center;
+    color: #666666;
+    height: 27px;
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;   
     
+}
 
-} 
+.icon_close{
+    position: absolute;
+    cursor: pointer;
+    top:0;
+    right: 0;
 
+}
 
-.square-3{
+.icon_close_login{
     
-
-    grid-column-start: 3;
-    grid-row-start:1;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
+    position: absolute;
+    cursor: pointer;
+    top:0;
+    right: 0;
 
     
 }
 
+.dialog-login{
+    background-color: #FFFFFF;   
+    width: 340px;
+    height: 330px;
+    border-radius: 6px;
+    margin-top: 80px;
+    overflow: hidden;
+    box-shadow: 0px 4px 60px #AAAAAA;
+    flex-wrap: wrap;
 
-.square-3 > img,
+}
 
-.square-3 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
+.dialog-input{
+    height: 47px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding-left: 15px;
+    width: 100%;
+    margin-bottom: 10px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+}
 
-    
+.signup{
+    background: #448899;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    color: #FFFFFF;
+    width: 100%;
+    border: none;
+    height: 47px;
+    cursor: pointer;
+}
 
-} 
-
-
-.square-4{
-    
-
-    grid-column-start: 4;
-    grid-row-start:1;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
+.login{
+    background: #448899;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    color: #FFFFFF;
+    width: 100%;
+    border: none;
+    height: 47px;
+    cursor: pointer;
+}
+.switch-signup{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #666666;
+    background-color:#FFFFFF ;
     
 }
 
-
-.square-4 > img,
-
-.square-4 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-.square-5{
-    
-
-    grid-column-start: 1;
-    grid-row-start: 2;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
+.switch-login{
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #666666;
+    background-color:#FFFFFF ;
 }
 
-
-.square-5 > img,
-
-.square-5 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-.square-6{
-    
-
-    grid-column-start: 2;
-    grid-row-start: 2;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
+.back_home{
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 10px;    
 }
 
-
-.square-6 > img,
-
-.square-6 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-.square-7{
-    
-
-    grid-column-start: 3;
-    grid-row-start: 2;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
-}
-
-
-.square-7 > img,
-
-.square-7 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-
-.square-8{
-    
-
-    grid-column-start: 4;
-    grid-row-start: 2;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
-}
-
-
-.square-8 > img,
-
-.square-8 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-
-.square-9{
-    
-
-    grid-column-start: 1;
-    grid-row-start: 3;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
-}
-
-
-.square-9 > img,
-
-.square-9 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-.square-10{
-    
-
-    grid-column-start: 2;
-    grid-row-start: 3;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
-}
-
-
-.square-10 > img,
-
-.square-10 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-.square-11{
-    
-
-    grid-column-start: 3;
-    grid-row-start: 3;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
-}
-
-
-.square-11 > img,
-
-.square-11 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
-
-
-
-.square-12{
-    
-
-    grid-column-start: 4;
-    grid-row-start: 3;
-    display: inline-grid;
-    background-color: rgb(255, 255, 255);  
-    height: 242px;
-    width: 270px;
-    border-radius: 5px ;
-    border-style:solid;
-    border-color: #C4C4C4;
-    border-width:1.5px;
-
-
-    
-}
-
-
-.square-12 > img,
-
-.square-12 > .title {
-    /* 還可以簡寫為 grid-area: 1 / 2 */
-    grid-area: 1/ 1 / 2;
-    align-self: end;
-
-    
-
-} 
 
 /* computer tablet RWD */
 @media (max-width:1200px){
+  
+    .nav_bar{
+        width: 90%;
+    }
+  
+    .search_bar{
+        width: 460px;
+    }
+    /* .input{
+        width: 80%;
+    } */
 
 
     .slogan{
         flex-wrap: wrap;
-        width: 80%;
-        height: auto;
-        margin-top: 86px ;
+        width: 90%;
+        height: auto;   
+  
         
-        
     }
 
-    .content{
-        flex-wrap: wrap;
-        width: 80%;
-        height:auto;
-        grid-template-columns: 1fr 1fr ;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr ;
-
-    }
-    .square-1{
-        width: 100%;
-    }
-    .square-2{
-        width: 100%;
+    .content-1{
+        width: 90%;
     }
 
-    .square-3{
-        width: 100%;
-        grid-column-start: 1;
-        grid-row-start: 2;
+    .attractionLink{
+        width: 45%;
     }
 
-    .square-4{
-        width: 100%;
-        grid-column-start: 2;
-        grid-row-start: 2;
-    }
+    /* .square{
+        width: 45%;
+    } */
+
     
-    .square-5{
-        width: 100%;
-        grid-column-start: 1;
-        grid-row-start: 3;
-    }
 
-    .square-6{
-        width: 100%;
-        grid-column-start: 2;
-        grid-row-start: 3;
-    }
-
-    .square-7{
-        width: 100%;
-        grid-column-start: 1;
-        grid-row-start: 4;
-    }
-
-    .square-8{
-        width: 100%;
-        grid-column-start: 2;
-        grid-row-start: 4;
-    }
-
-    .square-9{
-        width: 100%;
-        grid-column-start: 1;
-        grid-row-start: 5;
-    }
-
-    .square-10{
-        width: 100%;
-        grid-column-start: 2;
-        grid-row-start: 5;
-    }
-
-    .square-11{
-        width: 100%;
-        grid-column-start: 1;
-        grid-row-start: 6;
-    }
-
-    .square-12{
-        width: 100%;
-        grid-column-start: 2;
-        grid-row-start: 6;
-    }
 
 }
 
@@ -719,6 +629,13 @@ body{
         padding-left: 10px;
     }
 
+
+    .search_bar{
+        width: 290px;
+    }
+    .search_card{
+        width: 290px;;
+    }
 
     .welcome{
         justify-content: center;
@@ -730,7 +647,8 @@ body{
     }
 
     .slogan{
-        margin-top: 140px;
+        margin-top: 60px;
+        width: 80%;
     }
 
     .input{
@@ -738,98 +656,19 @@ body{
 
     }
 
-    .content{
-        grid-template-columns: 1fr ;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+    .content-1{
         width: 80%;
     }
 
-    .square-1{
-        width:100%;
-        height:280px;
-    }
-    .square-2{
-        grid-column-start: 1;
-        grid-row-start: 2;
-        width:100%;
+    .square{
+        width: 100%;
         height:280px;
     }
 
-    .square-3{
-        grid-column-start: 1;
-        grid-row-start: 3;
-        width:100%;
-        height:280px;
-
-    }
-    
-    .square-4{
-        grid-column-start: 1;
-        grid-row-start: 4;
-        width:100%;
-        height:280px;
+    .attractionLink{
+        width: 100%;
+        margin-top: 30px;
     }
 
     
-    .square-5{
-        grid-column-start: 1;
-        grid-row-start: 5;
-        width:100%;
-        height:280px;
-    }
-
-    
-    .square-6{
-        grid-column-start: 1;
-        grid-row-start: 6;
-        width:100%;
-        height:280px;
-    }
-
-    
-    .square-7{
-        grid-column-start: 1;
-        grid-row-start: 7;
-        width:100%;
-        height:280px;
-    }
-
-    .square-8{
-        grid-column-start: 1;
-        grid-row-start: 8;
-        width:100%;
-        height:280px;
-    }
-
-    .square-9{
-        grid-column-start: 1;
-        grid-row-start: 9;
-        width:100%;
-        height:280px;
-    }
-
-    .square-10{
-        grid-column-start: 1;
-        grid-row-start: 10;
-        width:100%;
-        height:280px;
-
-    }
-
-    .square-11{
-        grid-column-start: 1;
-        grid-row-start: 11;
-        width:100%;
-        height:280px;
-    }
-
-    .square-12{
-        grid-column-start: 1;
-        grid-row-start: 12;
-        width:100%;
-        height:280px;
-    }
-
-
-
 }
