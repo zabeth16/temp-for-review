@@ -5,7 +5,7 @@
     <meta meta name="viewport" content="width=device-width, initial-scale=1">
     <title>景點頁面</title>
     <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='css/attraction.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user.css') }}">
 
 </head>
     
@@ -16,34 +16,71 @@
 <body>
     <div class ="nav">
         <div class = "nav_bar">
+            <a class = "back_home"  href = "/">
             <txt class = "nav_title">
                 台北一日遊
             </txt>
+            </a>
 
             <div class="top_buttum">
-                <button class = "forNavigation" >預定行程</button><!-- link will be right in <a> -->                                   
-                <button class = "forNavigation" >登入/註冊</button>                    
+                <button class = "forNavigation" id = "booking">預定行程</button><!-- link will be right in <a> -->                                   
+                <button class = "forNavigation" id = "login_signup">登入/註冊</button>                    
             </div>
         </div>
     </div>
 
+    <div class = "dialog-background" style="display: none;">
+        <div class = "dialog-signup"   style="display : none ;">
+            <div class = "decorator-bar"></div>
+            <div class = "dialog-main" >
+                <txt class = "dialog-title">
+                    註冊會員帳號
+                    <img class = "icon_close" src = "/mysource/icon_close.png" />
+                </txt>
+                <input class = "dialog-input" id = "name" type="text" name = "name" placeholder = "輸入姓名" required />
+                <input class = "dialog-input" id = "email" type="text" name = "email" placeholder = "輸入email" required />
+                <input class = "dialog-input" id = "password" type="password" name = "password" placeholder = "輸入密碼" required />                
+                <button class = "signup" type="submit">註冊新帳戶</button>
+                <!-- 預留插入警告<txt> -->
+                <txt class = notice></txt>                
+                <button class = "switch-login">已經有帳戶了?點此登入</button>
+            </div>        
+            
+
+        </div>
+
+        <div class = "dialog-login"  >
+            <div class = "decorator-bar"></div>
+            <div class = "dialog-main">
+                <txt class = "dialog-title">
+                    登入會員帳號
+                    <img class = "icon_close_login" src = "/mysource/icon_close.png" />
+                </txt>
+                <input class = "dialog-input" id = "email-login" type="text" name = "email" placeholder = "輸入email" required />
+                <input class = "dialog-input" id = "password-login" type="password" name = "password" placeholder = "輸入密碼" required />
+                <button class = "login">登入帳戶</button>                
+                <!-- 預留插入警告<txt> -->
+                <txt class = notice-login></txt>
+                <button class = "switch-signup">還沒有帳戶?點此註冊</button>
+            </div>
+
+        </div>
+    </div> <!-- dialog-background -->
+
     <div class = "welcome">
         <div class="section">
-            <div class = "pic_box">
+            <div class = "slideshow-container">
+                <!-- <div class = "mySlides fade"> -->
                 <!-- <img class = "img-control" src="/mysource/G.jpg"/> -->
+                <!-- </div> -->
                 <img class = "left-A" src="/mysource/left-A.png" />
                 <img class = "right-A" src="/mysource/right-A.png"/>
-                <div class = "circle-box">
-                    <!-- <div class = "big-white">
-                        <div class = "small-black"></div>
-                    </div>
-                    <div class = "big-white"> -->                        
-                    <!-- </div> -->
-                </div>
-               
+                <div class = "circle-box"></div>              
 
 
             </div>
+
+
             <div class="profile">
                 <txt class = "name"></txt>
 
@@ -61,8 +98,10 @@
                     <div class = "booking-date">
                         <txt class = "booking-choose">訂購日期 :</txt>
                         <input type = "date" class = "calender"></input>
+                        
                     </div>
-
+                    <txt class = "date-notice" style="display: none;"></txt>
+                    
                     <div class = "booking-time">
 
                         <txt class = "booking-choose">選擇時間 :</txt>
@@ -122,12 +161,12 @@
 
 
 
-    <!-- <div class = "footer">
-         api 串進來都完成再用footer
-    </div> -->
+    <div class = "footer">
+         
+    </div>
 
 </body>
 
-<script type = "text/javascript"  src="/mysource/attraction.js"></script>
-
+<script type = "text/javascript"  src="/mysource/js/attraction.js"></script>
+<script type = "text/javascript" src="{{ url_for('static', filename='js/user.js') }}"></script>
 </html>
